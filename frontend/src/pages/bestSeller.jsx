@@ -3,6 +3,8 @@ import React from "react";
 import cdimg from "../assets/hero8.png";
 import card1 from "../assets/card1.png"
 import card2 from "../assets/card2.jpg"
+import {Link } from "react-router-dom"
+
 
 const cardDetails = [
   {
@@ -45,9 +47,9 @@ const bestSeller = () => {
       </p>
     </div>
 
-    <button className="rounded-full border border-[#2F3A25] px-6 py-2 text-sm font-medium text-[#2F3A25] transition duration-300 hover:bg-[#2F3A25] hover:text-[#F7F2EB]">
+    <Link to={`/shop`} className="rounded-full border border-[#2F3A25] px-6 py-2 text-sm font-medium text-[#2F3A25] transition duration-300 hover:bg-[#2F3A25] hover:text-[#F7F2EB]">
       View All
-    </button>
+    </Link >
 
   </div>
 
@@ -85,9 +87,9 @@ const bestSeller = () => {
               ₹{item.price}
             </p>
 
-            <button className="text-sm font-medium text-[#2F3A25] underline underline-offset-4 transition hover:opacity-60">
+            <Link to={`/shop`} className="text-sm font-medium text-[#2F3A25] underline underline-offset-4 transition hover:opacity-60 ">
               View Product
-            </button>
+            </Link>
 
           </div>
 
