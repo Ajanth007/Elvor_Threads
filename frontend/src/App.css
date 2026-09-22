@@ -1,1 +1,63 @@
 @import "tailwindcss";
+
+@keyframes pageFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-load {
+  animation: pageFadeUp 0.8s ease-out forwards;
+}
+
+@keyframes collectionLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes collectionRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.collection-men {
+  animation: collectionLeft 0.8s ease-out forwards;
+}
+
+.collection-women {
+  animation: collectionRight 0.8s ease-out 0.2s forwards;
+  opacity: 0;
+}
+
+.collection-hidden {
+  opacity: 0;
+  transform: translateY(60px);
+}
+
+.animate-collection {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 2s ease-out,
+    transform 2s ease-out;
+}

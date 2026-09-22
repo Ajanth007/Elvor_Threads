@@ -14,8 +14,11 @@ import tdesign from "../assets/icons/Trendy_design.png";
 import afprice from "../assets/icons/affordable.png";
 import cs from "../assets/icons/customer-review.png";
 
+import ScrollAnimation from "../components/ScrollAnimation.jsx";
+
 import Bestseller from "./bestSeller.jsx";
 import Sale from "./sale.jsx";
+
 
 const details = [
   {
@@ -69,11 +72,11 @@ const detail = [
 
 const home = () => {
   return (
-    <div className="w-full overflow-x-hidden">
+    <div className="w-full overflow-x-hidden ">
 
       {/* ================= HERO ================= */}
-
-      <section className="w-full bg-[#F7F2EB]">
+<ScrollAnimation>
+      <section className="w-full bg-[#F7F2EB] page-load">
 
         <div className="flex min-h-[600px] flex-col md:min-h-[650px] md:flex-row">
 
@@ -116,7 +119,7 @@ const home = () => {
         </div>
 
       </section>
-
+</ScrollAnimation>
 
       {/* ================= WHY CHOOSE US ================= */}
 
@@ -164,96 +167,92 @@ const home = () => {
 
       {/* ================= MEN / WOMEN ================= */}
 
-      <section className="w-full px-5 sm:px-8 md:px-10">
+<ScrollAnimation>
+   <section className="w-full px-5 sm:px-8 md:px-10">
 
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+  <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
 
-          {/* MEN */}
+    {/* MEN */}
+    <div className="collection-men flex min-h-[500px] flex-col overflow-hidden rounded-xl bg-[#F7F2EB] sm:min-h-[400px] md:flex-row lg:min-h-[350px]">
 
-          <div className="flex min-h-[500px] flex-col overflow-hidden rounded-xl bg-[#F7F2EB] sm:min-h-[400px] md:flex-row lg:min-h-[350px]">
+      {/* Text */}
+      <div className="flex w-full flex-col justify-center px-6 py-8 sm:px-8 md:w-1/2">
 
-            {/* Text */}
+        <p className="mb-2 text-xs tracking-[0.2em] text-[#8B9A6E] sm:text-sm">
+          ELVOR THREADS
+        </p>
 
-            <div className="flex w-full flex-col justify-center px-6 py-8 sm:px-8 md:w-1/2">
+        <h2 className="text-2xl font-semibold text-[#2F3328] sm:text-3xl">
+          Men's Collection
+        </h2>
 
-              <p className="mb-2 text-xs tracking-[0.2em] text-[#8B9A6E] sm:text-sm">
-                ELVOR THREADS
-              </p>
+        <p className="mt-3 text-sm leading-6 text-[#55584F]">
+          Clean silhouettes and timeless essentials designed for
+          everyday confidence.
+        </p>
 
-              <h2 className="text-2xl font-semibold text-[#2F3328] sm:text-3xl">
-                Men's Collection
-              </h2>
+        <button className="mt-5 w-fit rounded-full bg-[#8B9A6E] px-6 py-2.5 text-sm text-white transition hover:bg-[#74845A]">
+          Shop Men
+        </button>
 
-              <p className="mt-3 text-sm leading-6 text-[#55584F]">
-                Clean silhouettes and timeless essentials designed for
-                everyday confidence.
-              </p>
+      </div>
 
-              <button className="mt-5 w-fit rounded-full bg-[#8B9A6E] px-6 py-2.5 text-sm text-white transition hover:bg-[#74845A]">
-                Shop Men
-              </button>
+      {/* Image */}
+      <div className="h-[280px] w-full overflow-hidden sm:h-[350px] md:h-auto md:w-1/2">
 
-            </div>
+        <img
+          src={saleMen}
+          alt="Elvor Threads men's collection"
+          className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+        />
 
-            {/* Image */}
+      </div>
 
-            <div className="h-[280px] w-full overflow-hidden sm:h-[350px] md:h-auto md:w-1/2">
-
-              <img
-                src={saleMen}
-                alt="Elvor Threads men's collection"
-                className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
-              />
-
-            </div>
-
-          </div>
+    </div>
 
 
-          {/* WOMEN */}
+    {/* WOMEN */}
+    <div className="collection-women flex min-h-[500px] flex-col overflow-hidden rounded-xl bg-[#EAE2D6] sm:min-h-[400px] md:flex-row lg:min-h-[350px]">
 
-          <div className="flex min-h-[500px] flex-col overflow-hidden rounded-xl bg-[#EAE2D6] sm:min-h-[400px] md:flex-row lg:min-h-[350px]">
+      {/* Image */}
+      <div className="order-1 h-[280px] w-full overflow-hidden sm:h-[350px] md:order-1 md:h-auto md:w-1/2">
 
-            {/* Image */}
+        <img
+          src={saleWomen}
+          alt="Elvor Threads women's collection"
+          className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+        />
 
-            <div className="order-1 h-[280px] w-full overflow-hidden sm:h-[350px] md:order-1 md:h-auto md:w-1/2">
+      </div>
 
-              <img
-                src={saleWomen}
-                alt="Elvor Threads women's collection"
-                className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
-              />
+      {/* Text */}
+      <div className="order-2 flex w-full flex-col justify-center px-6 py-8 sm:px-8 md:w-1/2">
 
-            </div>
+        <p className="mb-2 text-xs tracking-[0.2em] text-[#8B9A6E] sm:text-sm">
+          ELVOR THREADS
+        </p>
 
-            {/* Text */}
+        <h2 className="text-2xl font-semibold text-[#2F3328] sm:text-3xl">
+          Women's Collection
+        </h2>
 
-            <div className="order-2 flex w-full flex-col justify-center px-6 py-8 sm:px-8 md:w-1/2">
+        <p className="mt-3 text-sm leading-6 text-[#55584F]">
+          Effortless styles and refined pieces made for your everyday
+          wardrobe.
+        </p>
 
-              <p className="mb-2 text-xs tracking-[0.2em] text-[#8B9A6E] sm:text-sm">
-                ELVOR THREADS
-              </p>
+        <button className="mt-5 w-fit rounded-full bg-[#8B9A6E] px-6 py-2.5 text-sm text-white transition hover:bg-[#74845A]">
+          Shop Women
+        </button>
 
-              <h2 className="text-2xl font-semibold text-[#2F3328] sm:text-3xl">
-                Women's Collection
-              </h2>
+      </div>
 
-              <p className="mt-3 text-sm leading-6 text-[#55584F]">
-                Effortless styles and refined pieces made for your everyday
-                wardrobe.
-              </p>
+    </div>
 
-              <button className="mt-5 w-fit rounded-full bg-[#8B9A6E] px-6 py-2.5 text-sm text-white transition hover:bg-[#74845A]">
-                Shop Women
-              </button>
+  </div>
 
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
+</section>
+</ScrollAnimation>
 
 
       {/* ================= BESTSELLER ================= */}
