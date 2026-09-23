@@ -5,7 +5,7 @@ const connection = mysql.createConnection({
     port: '3307',
     user: 'root',
     password: 'root',
-    database: 'student_management'
+    database: 'elvor_threads'
 });
 
 connection.connect((err) => {

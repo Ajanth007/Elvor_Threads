@@ -75,10 +75,11 @@ const home = () => {
     <div className="w-full overflow-x-hidden ">
 
       {/* ================= HERO ================= */}
+
 <ScrollAnimation>
       <section className="w-full bg-[#F7F2EB] page-load">
 
-        <div className="flex min-h-[600px] flex-col md:min-h-[650px] md:flex-row">
+        <div className="flex min-h-150 flex-col md:min-h-162.5 md:flex-row">
 
           {/* Text */}
           <div className="order-2 flex w-full flex-col justify-center gap-5 px-6 py-12 sm:px-10 md:order-1 md:w-1/2 md:px-12 lg:px-20">
@@ -106,13 +107,15 @@ const home = () => {
           </div>
 
           {/* Image */}
-          <div className="order-1 h-[350px] w-full sm:h-[450px] md:order-2 md:h-auto md:w-1/2">
+          <div className="order-1 h-87.5 w-full sm:h-112.5 md:order-2 md:h-auto md:w-1/2">
+
 
             <img
               src={image}
               alt="Elvor Threads seasonal collection"
               className="h-full w-full object-cover object-center"
             />
+            
 
           </div>
 
@@ -167,13 +170,13 @@ const home = () => {
 
       {/* ================= MEN / WOMEN ================= */}
 
-<ScrollAnimation>
+
    <section className="w-full px-5 sm:px-8 md:px-10">
 
   <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
 
     {/* MEN */}
-    <div className="collection-men flex min-h-[500px] flex-col overflow-hidden rounded-xl bg-[#F7F2EB] sm:min-h-[400px] md:flex-row lg:min-h-[350px]">
+    <div className="collection-men flex min-h-125 flex-col overflow-hidden rounded-xl bg-[#F7F2EB] sm:min-h-100 md:flex-row lg:min-h-87.5">
 
       {/* Text */}
       <div className="flex w-full flex-col justify-center px-6 py-8 sm:px-8 md:w-1/2">
@@ -198,7 +201,7 @@ const home = () => {
       </div>
 
       {/* Image */}
-      <div className="h-[280px] w-full overflow-hidden sm:h-[350px] md:h-auto md:w-1/2">
+      <div className="h-70 w-full overflow-hidden sm:h-87.5 md:h-auto md:w-1/2">
 
         <img
           src={saleMen}
@@ -212,10 +215,10 @@ const home = () => {
 
 
     {/* WOMEN */}
-    <div className="collection-women flex min-h-[500px] flex-col overflow-hidden rounded-xl bg-[#EAE2D6] sm:min-h-[400px] md:flex-row lg:min-h-[350px]">
+    <div className="collection-women flex min-h-125 flex-col overflow-hidden rounded-xl bg-[#EAE2D6] sm:min-h-100 md:flex-row lg:min-h-87.5">
 
       {/* Image */}
-      <div className="order-1 h-[280px] w-full overflow-hidden sm:h-[350px] md:order-1 md:h-auto md:w-1/2">
+      <div className="order-1 h-70 w-full overflow-hidden sm:h-87.5 md:order-1 md:h-auto md:w-1/2">
 
         <img
           src={saleWomen}
@@ -252,7 +255,7 @@ const home = () => {
   </div>
 
 </section>
-</ScrollAnimation>
+
 
 
       {/* ================= BESTSELLER ================= */}
