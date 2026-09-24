@@ -15,7 +15,6 @@ const Navbar = () => {
 
   return (
     <div className="flex items-center justify-between px-8 py-5 bg-[#F7F2EB]">
-      
       {/* Logo */}
       <div className="text-2xl font-light tracking-wide text-[#3A362F] cursor-pointer">
         <Link to="/">Elvor Threads</Link>
@@ -23,7 +22,6 @@ const Navbar = () => {
 
       {/* Navigation */}
       <div className="flex items-center gap-8 text-sm font-medium tracking-wide text-[#2F3A25]">
-        
         <Link
           to="/"
           className="cursor-pointer hover:text-[#8B9A6E] transition-colors duration-200"
@@ -51,18 +49,20 @@ const Navbar = () => {
         >
           Contact
         </Link>
-
       </div>
 
       {/* Icons */}
       <div className="flex items-center gap-5">
-
+        
         {/* Search */}
-        <img
-          src={search}
-          alt="Search"
-          className="w-5 h-5 cursor-pointer hover:scale-110 transition-transform duration-200"
-        />
+        <Link to="/search">
+          {" "}
+          <img
+            src={search}
+            alt="Search"
+            className="w-5 h-5 cursor-pointer hover:scale-110 transition-transform duration-200"
+          />{" "}
+        </Link>
 
         {/* Cart */}
         <Link to="/cart" className="relative">
@@ -96,7 +96,6 @@ const Navbar = () => {
             Login
           </Link>
         )}
-
       </div>
     </div>
   );
