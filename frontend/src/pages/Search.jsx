@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
+
 import axios from "axios";
 
 const Search = () => {
   const [searchText, setSearchText] = useState("");
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const [searchParams] = useSearchParams();
+  const category = searchParams.get("category");
 
   const BASE_URL = "http://localhost:8000";
 
@@ -26,20 +30,27 @@ const Search = () => {
   }, []);
 
   // Filter products
+  //   const filteredProducts = products.filter((product) => {
+  //     const search = searchText.toLowerCase().trim();
+
+  //     if (!search) {
+  //       return false;
+  //     }
+
   const filteredProducts = products.filter((product) => {
     const search = searchText.toLowerCase().trim();
 
-    if (!search) {
-      return false;
-    }
+    const matchesCategory =
+      !category || product.category?.toLowerCase() === category.toLowerCase();
 
-    return (
+    const matchesSearch =
+      !search ||
       product.name?.toLowerCase().includes(search) ||
       product.category?.toLowerCase().includes(search) ||
-      product.description?.toLowerCase().includes(search)
-    );
-  });
+      product.description?.toLowerCase().includes(search);
 
+    return matchesCategory && matchesSearch;
+  });
   return (
     <div className="min-h-screen bg-[#F7F2EB] px-6 py-10 md:px-12 lg:px-20">
       {/* Heading */}
@@ -86,12 +97,10 @@ const Search = () => {
       {/* Results */}
       <div className="max-w-6xl mx-auto mt-12">
         {loading ? (
+          <p className="text-center text-gray-500">Loading products...</p>
+        ) : searchText.trim() === "" && !category ? (
           <p className="text-center text-gray-500">
-            Loading products...
-          </p>
-        ) : searchText.trim() === "" ? (
-          <p className="text-center text-gray-500">
-            
+           
           </p>
         ) : filteredProducts.length === 0 ? (
           <div className="text-center py-16">
@@ -107,8 +116,7 @@ const Search = () => {
           <>
             <p className="mb-6 text-sm text-gray-500">
               {filteredProducts.length}{" "}
-              {filteredProducts.length === 1 ? "product" : "products"}{" "}
-              found
+              {filteredProducts.length === 1 ? "product" : "products"} found
             </p>
 
             {/* Product Grid */}

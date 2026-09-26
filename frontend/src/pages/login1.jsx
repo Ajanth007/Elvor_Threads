@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
 const Login = () => {
@@ -106,9 +106,11 @@ const Login = () => {
         {/* Register */}
         <p className="text-center text-sm text-gray-500 mt-6">
           Don't have an account?{" "}
+          <Link to = '/register'>
           <button className="text-[#6F7D55] font-semibold hover:underline">
             Sign Up
           </button>
+          </Link>
         </p>
       </div>
     </div>

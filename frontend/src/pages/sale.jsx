@@ -1,5 +1,6 @@
 import React from 'react'
 import saleimg from '../assets/saleimg1.png'
+import { Link } from 'react-router-dom'
 
 const sale = () => {
   return (
@@ -23,9 +24,10 @@ const sale = () => {
         Refresh your wardrobe with our latest styles.
       </p>
 
+<Link to='/search?category=tshirt'>
       <button className="mt-5 rounded-full bg-[#2F3A25] px-7 py-2.5 text-sm font-semibold text-[#F7F2EB] transition duration-300 hover:bg-[#F7F2EB] hover:text-[#2F3A25]">
         Shop Now
-      </button>
+      </button></Link>
 
     </div>
 

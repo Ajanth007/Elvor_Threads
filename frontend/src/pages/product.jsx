@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import AddtocartButton from "../components/addToCart_button"
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -135,13 +136,13 @@ const ProductDetails = () => {
             </div>
 
             {/* Add to Cart */}
-            <button
+            <AddtocartButton
               disabled={product.stock === 0}
               onClick={() => addToCart(product, quantity, selectedSize)}
               className="mt-8 h-14 w-full rounded-xl bg-[#2F3A25] text-base font-medium text-white transition hover:bg-[#526044] disabled:cursor-not-allowed disabled:bg-gray-400"
             >
               {product.stock === 0 ? "Out of Stock" : "Add to Cart"}
-            </button>
+            </AddtocartButton>
           </div>
         </div>
       </div>
