@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ShoppingCart, ArrowRight, Check } from "lucide-react";
+import { useCart } from "../context/CartContext";
 
 /**
  * Premium "Add to Cart" button, built for this palette:
@@ -26,19 +27,31 @@ export default function AddToCartButton({ onAdd, label = "Add to Cart" }) {
   const CENTER_MS = 450; // beat 1: cart travel time
   const HOLD_MS = 1200; // how long "Added to Cart" stays up
 
+  const { addToCart } = useCart();
   const handleClick = () => {
-    if (status !== "idle") return;
-    setStatus("centering");
+  console.log("BUTTON CLICKED");
 
-    // beat 1 finishes -> begin beat 2 (fill + green + label)
-    window.setTimeout(() => {
-      setStatus("filled");
-      onAdd?.();
-    }, CENTER_MS);
+  if (status !== "idle") {
+    console.log("Button is already processing");
+    return;
+  }
 
-    // reset back to idle
-    window.setTimeout(() => setStatus("idle"), CENTER_MS + HOLD_MS);
-  };
+  console.log("Button click accepted");
+
+  setStatus("centering");
+
+  window.setTimeout(() => {
+    console.log("ONADD CALLED");
+
+    setStatus("filled");
+
+    onAdd?.();
+  }, CENTER_MS);
+
+  window.setTimeout(() => {
+    setStatus("idle");
+  }, CENTER_MS + HOLD_MS);
+};
 
   const isCentering = status === "centering";
   const isFilled = status === "filled";
@@ -54,7 +67,8 @@ export default function AddToCartButton({ onAdd, label = "Add to Cart" }) {
         "group relative isolate flex h-14 w-64 items-center overflow-hidden rounded-2xl px-5",
         "font-semibold tracking-tight shadow-lg shadow-black/10",
         "transition-colors duration-500 ease-out",
-        "focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2","mt-4"
+        "focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
+        "mt-4",
       ].join(" ")}
       style={{
         backgroundColor: isFilled ? "#8B9A6E" : "#2B3324",
@@ -75,12 +89,14 @@ export default function AddToCartButton({ onAdd, label = "Add to Cart" }) {
       <span
         className={[
           "absolute z-10 flex items-center justify-center transition-all ease-out",
-          isBusy ? "left-1/2 -translate-x-1/2 duration-500" : "left-5 translate-x-0 duration-300",
+          isBusy
+            ? "left-1/2 -translate-x-1/2 duration-500"
+            : "left-5 translate-x-0 duration-300",
         ].join(" ")}
       >
         {isFilled ? (
-        //   <Check className="h-5 w-5 text-current" strokeWidth={3} />
-        <p> </p>
+          //   <Check className="h-5 w-5 text-current" strokeWidth={3} />
+          <p> </p>
         ) : (
           <ShoppingCart
             className={[
@@ -109,7 +125,9 @@ export default function AddToCartButton({ onAdd, label = "Add to Cart" }) {
         className={[
           "pointer-events-none absolute inset-0 z-10 flex items-center justify-center pl-6",
           "text-[15px] transition-all duration-300 ease-out",
-          isFilled ? "opacity-100 translate-y-0 delay-150" : "opacity-0 translate-y-1",
+          isFilled
+            ? "opacity-100 translate-y-0 delay-150"
+            : "opacity-0 translate-y-1",
         ].join(" ")}
       >
         Added to Cart
@@ -119,7 +137,9 @@ export default function AddToCartButton({ onAdd, label = "Add to Cart" }) {
       <span
         className={[
           "absolute right-5 z-10 transition-all duration-300 ease-out",
-          isBusy ? "opacity-0 translate-x-1" : "opacity-100 translate-x-0 group-hover:translate-x-0.5",
+          isBusy
+            ? "opacity-0 translate-x-1"
+            : "opacity-100 translate-x-0 group-hover:translate-x-0.5",
         ].join(" ")}
       >
         <ArrowRight className="h-5 w-5 text-current" strokeWidth={2} />

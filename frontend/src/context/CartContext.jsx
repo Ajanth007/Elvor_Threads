@@ -1,49 +1,77 @@
+// 
+
 import React, { createContext, useContext, useEffect, useState } from "react";
+import axios from "axios";
 
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState(() => {
-    const savedCart = localStorage.getItem("cart");
-    return savedCart ? JSON.parse(savedCart) : [];
-  });
+  const [cartItems, setCartItems] = useState([]);
 
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cartItems));
-  }, [cartItems]);
+  const addToCart = async (product, quantity, selectedSize) => {
+    try {
+      const token = localStorage.getItem("token");
+      const userId = localStorage.getItem("userId");
 
-  const addToCart = (product, quantity, selectedSize) => {
-    setCartItems((currentItems) => {
-      const existingItem = currentItems.find(
-        (item) =>
-          item.id === product.id &&
-          item.size === selectedSize
-      );
-
-      if (existingItem) {
-        return currentItems.map((item) =>
-          item.id === product.id && item.size === selectedSize
-            ? {
-                ...item,
-                quantity: item.quantity + quantity,
-              }
-            : item
-        );
+      if (!token || !userId) {
+        console.log("User is not logged in");
+        return;
       }
 
-      return [
-        ...currentItems,
+      const response = await axios.post(
+        "http://localhost:8000/cart",
         {
-          id: product.id,
-          name: product.name,
-          price: Number(product.price),
-          image: product.image,
-          size: selectedSize,
+          userId: userId,
+          productId: product.id,
           quantity: quantity,
-          stock: product.stock,
         },
-      ];
-    });
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      console.log("Backend response:", response.data);
+
+      setCartItems((currentItems) => {
+        const existingItem = currentItems.find(
+          (item) =>
+            item.id === product.id &&
+            item.size === selectedSize
+        );
+
+        if (existingItem) {
+          return currentItems.map((item) =>
+            item.id === product.id &&
+            item.size === selectedSize
+              ? {
+                  ...item,
+                  quantity: item.quantity + quantity,
+                }
+              : item
+          );
+        }
+
+        return [
+          ...currentItems,
+          {
+            id: product.id,
+            name: product.name,
+            price: Number(product.price),
+            image: product.image,
+            size: selectedSize,
+            quantity: quantity,
+            stock: product.stock,
+          },
+        ];
+      });
+    } catch (error) {
+      console.error(
+        "Add to cart error:",
+        error.response?.data || error.message
+      );
+    }
   };
 
   const removeFromCart = (id, size) => {
@@ -82,6 +110,47 @@ export const CartProvider = ({ children }) => {
     (total, item) => total + item.price * item.quantity,
     0
   );
+
+  const fetchCart = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        setCartItems([]);
+        return;
+      }
+
+      const response = await axios.get(
+        "http://localhost:8000/cart",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const formattedCart = response.data.map((item) => ({
+        id: item.product_id,
+        name: item.name,
+        price: Number(item.price),
+        image: item.image,
+        size: item.size,
+        quantity: item.quantity,
+        stock: item.stock,
+      }));
+
+      setCartItems(formattedCart);
+    } catch (error) {
+      console.error(
+        "Fetch cart error:",
+        error.response?.data || error.message
+      );
+    }
+  };
+
+  useEffect(() => {
+    fetchCart();
+  }, []);
 
   return (
     <CartContext.Provider

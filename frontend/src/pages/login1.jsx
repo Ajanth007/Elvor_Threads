@@ -9,36 +9,79 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const Handlelogin = async (e) => {
-    e.preventDefault();
+//   const Handlelogin = async (e) => {
+//     e.preventDefault();
 
-    try {
-      const response = await axios.post("http://localhost:3001/login", {
+//     try {
+//       const response = await axios.post("http://localhost:8000/auth/login", {
+//         username: username,
+//         password: password,
+//       });
+
+//       dispatch({
+//   type: "LOGIN",
+//   payload: {
+//     token: response.data.token,
+//     username: response.data.user.username,
+//     id: response.data.user.id,
+//   },
+// });
+
+// localStorage.setItem("token", response.data.token);
+// localStorage.setItem("userId", response.data.userId);
+
+//       setUsername("");
+//       setPassword("");
+//       alert("User logged in successfully");
+
+//       navigate("/profile");
+//     } catch (error) {
+//       console.error(error);
+//       alert("Login failed");
+//     }
+//   };
+
+
+const Handlelogin = async (e) => {
+  e.preventDefault();
+
+  try {
+    const response = await axios.post(
+      "http://localhost:8000/auth/login",
+      {
         username: username,
         password: password,
-      });
+      }
+    );
 
-      dispatch({
-  type: "LOGIN",
-  payload: {
-    token: response.data.token,
-    username: response.data.user.username,
-    id: response.data.user.id,
-  },
-});
+    dispatch({
+      type: "LOGIN",
+      payload: {
+        token: response.data.token,
+        username: response.data.user.username,
+        id: response.data.user.id,
+      },
+    });
 
-      localStorage.setItem("token", response.data.token);
+    localStorage.setItem("token", response.data.token);
+    localStorage.setItem("userId", response.data.user.id);
 
-      setUsername("");
-      setPassword("");
-      alert("User logged in successfully");
+    setUsername("");
+    setPassword("");
 
-      navigate("/profile");
-    } catch (error) {
-      console.error(error);
-      alert("Login failed");
-    }
-  };
+    alert("User logged in successfully");
+
+    navigate("/profile");
+  } catch (error) {
+    console.error(
+      "Login error:",
+      error.response?.data || error.message
+    );
+
+    alert("Login failed");
+  }
+};
+
 
   return (
     <div className="min-h-screen bg-[#F7F2EB] flex items-center justify-center px-4">

@@ -298,6 +298,7 @@ const { createTables } = require("./db");
 const authRoutes = require("./routes/authRoutes");
 const productRoutes = require("./routes/productRoutes");
 const userRoutes = require("./routes/userRoutes");
+const cartRoutes = require("./routes/cartRoute");
 
 const app = express();
 
@@ -316,8 +317,9 @@ app.use("/uploads", express.static("uploads"));
 // =========================
 
 app.use("/auth", authRoutes);
-app.use("/products", productRoutes);
+app.use("/shop", productRoutes);
 app.use("/users", userRoutes);
+app.use("/cart",cartRoutes);
 
 // =========================
 // Basic Routes

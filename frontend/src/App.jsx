@@ -7,7 +7,7 @@ import Contact from "./pages/contact.jsx";
 import Shop from "./pages/shop.jsx";
 import About from "./pages/about.jsx";
 import Product from "./pages/product.jsx";
-import Cart from "./pages/cart.jsx";
+import Cart from "./pages/Cart.jsx";
 import Search from "./pages/Search.jsx";
 
 import Login from "./pages/login1";
