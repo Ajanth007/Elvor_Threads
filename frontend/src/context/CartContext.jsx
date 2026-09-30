@@ -74,13 +74,50 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  const removeFromCart = (id, size) => {
+  // const removeFromCart = (id, size) => {
+  //   setCartItems((currentItems) =>
+  //     currentItems.filter(
+  //       (item) => !(item.id === id && item.size === size)
+  //     )
+  //   );
+  // };
+
+   
+const removeFromCart = async (id, size) => {
+  try {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      console.log("User is not logged in");
+      return;
+    }
+
+    const response = await axios.delete(
+      `http://localhost:8000/cart/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    console.log("Remove from cart response:", response.data);
+
+    // Update frontend cart after successful backend deletion
     setCartItems((currentItems) =>
       currentItems.filter(
         (item) => !(item.id === id && item.size === size)
       )
     );
-  };
+  } catch (error) {
+    console.error(
+      "Remove from cart error:",
+      error.response?.data || error.message
+    );
+  }
+};
+
+
 
   const updateQuantity = (id, size, newQuantity) => {
     if (newQuantity < 1) return;
