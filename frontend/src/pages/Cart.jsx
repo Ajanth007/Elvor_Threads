@@ -70,7 +70,7 @@ const Cart = () => {
                     <div className="flex h-10 items-center rounded-lg border border-gray-300">
                       <button
                         onClick={() =>
-                          updateQuantity(item.id, item.size, item.quantity - 1)
+                          updateQuantity(item.id, item.quantity - 1)
                         }
                         className="px-3 text-lg text-[#2F3A25]"
                       >
@@ -81,7 +81,7 @@ const Cart = () => {
 
                       <button
                         onClick={() =>
-                          updateQuantity(item.id, item.size, item.quantity + 1)
+                          updateQuantity(item.id, item.quantity + 1)
                         }
                         disabled={item.quantity >= item.stock}
                         className="px-3 text-lg text-[#2F3A25] disabled:text-gray-300"

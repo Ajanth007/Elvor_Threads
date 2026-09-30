@@ -1,4 +1,4 @@
-// 
+//
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
@@ -29,27 +29,24 @@ export const CartProvider = ({ children }) => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       console.log("Backend response:", response.data);
 
       setCartItems((currentItems) => {
         const existingItem = currentItems.find(
-          (item) =>
-            item.id === product.id &&
-            item.size === selectedSize
+          (item) => item.id === product.id && item.size === selectedSize,
         );
 
         if (existingItem) {
           return currentItems.map((item) =>
-            item.id === product.id &&
-            item.size === selectedSize
+            item.id === product.id && item.size === selectedSize
               ? {
                   ...item,
                   quantity: item.quantity + quantity,
                 }
-              : item
+              : item,
           );
         }
 
@@ -69,7 +66,7 @@ export const CartProvider = ({ children }) => {
     } catch (error) {
       console.error(
         "Add to cart error:",
-        error.response?.data || error.message
+        error.response?.data || error.message,
       );
     }
   };
@@ -82,70 +79,84 @@ export const CartProvider = ({ children }) => {
   //   );
   // };
 
-   
-const removeFromCart = async (id, size) => {
-  try {
-    const token = localStorage.getItem("token");
+  const removeFromCart = async (id, size) => {
+    try {
+      const token = localStorage.getItem("token");
 
-    if (!token) {
-      console.log("User is not logged in");
-      return;
-    }
+      if (!token) {
+        console.log("User is not logged in");
+        return;
+      }
 
-    const response = await axios.delete(
-      `http://localhost:8000/cart/${id}`,
-      {
+      const response = await axios.delete(`http://localhost:8000/cart/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
-    );
+      });
 
-    console.log("Remove from cart response:", response.data);
+      console.log("Remove from cart response:", response.data);
 
-    // Update frontend cart after successful backend deletion
-    setCartItems((currentItems) =>
-      currentItems.filter(
-        (item) => !(item.id === id && item.size === size)
-      )
-    );
-  } catch (error) {
-    console.error(
-      "Remove from cart error:",
-      error.response?.data || error.message
-    );
-  }
-};
+      // Update frontend cart after successful backend deletion
+      setCartItems((currentItems) =>
+        currentItems.filter((item) => !(item.id === id && item.size === size)),
+      );
+    } catch (error) {
+      console.error(
+        "Remove from cart error:",
+        error.response?.data || error.message,
+      );
+    }
+  };
 
-
-
-  const updateQuantity = (id, size, newQuantity) => {
+  const updateQuantity = async (id, newQuantity) => {
     if (newQuantity < 1) return;
 
-    setCartItems((currentItems) =>
-      currentItems.map((item) =>
-        item.id === id && item.size === size
-          ? {
-              ...item,
-              quantity: Math.min(newQuantity, item.stock),
-            }
-          : item
-      )
-    );
+    try {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        return;
+      }
+
+      await axios.put(
+        `http://localhost:8000/cart/${id}`,
+        {
+          quantity: newQuantity,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      setCartItems((currentItems) =>
+        currentItems.map((item) =>
+          item.id === id
+            ? {
+                ...item,
+                quantity: Math.min(newQuantity, item.stock),
+              }
+            : item,
+        ),
+      );
+    } catch (error) {
+      console.error(
+        "Update cart error:",
+        error.response?.data || error.message,
+      );
+    }
   };
 
   const clearCart = () => {
     setCartItems([]);
   };
 
-  const cartCount = cartItems.reduce(
-    (total, item) => total + item.quantity,
-    0
-  );
+  const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   const cartTotal = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
-    0
+    0,
   );
 
   const fetchCart = async () => {
@@ -157,14 +168,11 @@ const removeFromCart = async (id, size) => {
         return;
       }
 
-      const response = await axios.get(
-        "http://localhost:8000/cart",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.get("http://localhost:8000/cart", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       const formattedCart = response.data.map((item) => ({
         id: item.product_id,
@@ -178,10 +186,7 @@ const removeFromCart = async (id, size) => {
 
       setCartItems(formattedCart);
     } catch (error) {
-      console.error(
-        "Fetch cart error:",
-        error.response?.data || error.message
-      );
+      console.error("Fetch cart error:", error.response?.data || error.message);
     }
   };
 

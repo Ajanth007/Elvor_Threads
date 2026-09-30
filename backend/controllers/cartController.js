@@ -176,7 +176,7 @@ const updateCart = async (req, res) => {
     }
 
     const [result] = await pool.query(
-      `UPDATE cart
+      `UPDATE cart  
        SET quantity = ?
        WHERE user_id = ?
        AND product_id = ?
