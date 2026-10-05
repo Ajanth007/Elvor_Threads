@@ -11,7 +11,7 @@ const getCart = async (req, res) => {
       `SELECT
         cart.id,
         cart.product_id,
-       
+        cart.size,
         cart.quantity,
         products.name,
         products.price,

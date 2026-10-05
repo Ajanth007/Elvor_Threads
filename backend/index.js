@@ -299,6 +299,7 @@ const authRoutes = require("./routes/authRoutes");
 const productRoutes = require("./routes/productRoutes");
 const userRoutes = require("./routes/userRoutes");
 const cartRoutes = require("./routes/cartRoute");
+const orderRoute = require("./routes/orderRoute");
 
 const app = express();
 
@@ -320,6 +321,7 @@ app.use("/auth", authRoutes);
 app.use("/shop", productRoutes);
 app.use("/users", userRoutes);
 app.use("/cart",cartRoutes);
+app.use("/order",orderRoute)
 
 // =========================
 // Basic Routes

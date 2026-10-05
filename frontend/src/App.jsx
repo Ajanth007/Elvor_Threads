@@ -9,6 +9,8 @@ import About from "./pages/about.jsx";
 import Product from "./pages/product.jsx";
 import Cart from "./pages/Cart.jsx";
 import Search from "./pages/Search.jsx";
+import Checkout from "./pages/checkout.jsx";
+
 
 import Login from "./pages/login1";
 import Register from "./pages/Register";
@@ -31,6 +33,7 @@ function App() {
         <Route path="/product/:id" element={<Product />} />
         <Route path="/about" element={<About />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
