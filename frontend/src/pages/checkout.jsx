@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Truck, ShoppingBag } from "lucide-react";
 import axios from "axios";
+import { useCart } from "../context/CartContext";
 
 /**
  * Checkout page wired to the provided Express/MySQL order endpoints:
@@ -51,6 +52,7 @@ export default function CheckoutPage() {
   const [cartItems, setCartItems] = useState([]);
   const [cartStatus, setCartStatus] = useState("loading"); // loading | ready | error
   const [cartError, setCartError] = useState("");
+  const { fetchCart } = useCart();
 
   const [shipping, setShipping] = useState({
     fullName: "",
@@ -94,7 +96,7 @@ export default function CheckoutPage() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [cartItems]);
 
   const subtotal = useMemo(
     () =>
@@ -123,129 +125,51 @@ export default function CheckoutPage() {
     return Object.keys(next).length === 0;
   };
 
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     if (cartItems.length === 0) return; // mirrors the server's "Cart is empty" check
-//     if (!validate()) return;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-//     setStatus("submitting");
+    if (cartItems.length === 0) {
+      return;
+    }
 
-//     try {
-//       const response = await axios.post(
-//         ORDERS_ENDPOINT,
-//         {
-//           shippingAddress: shipping,
-//         },
-//         {
-//           headers: {
-//             "Content-Type": "application/json",
-//             ...authHeaders(),
-//           },
-//         },
-//       );
+    if (!validate()) {
+      return;
+    }
 
-//       const body = response.data;
+    setStatus("submitting");
 
-//       setOrderResult({
-//         orderId: body.orderId,
-//         totalAmount: body.totalAmount,
-//       });
-
-//       setStatus("success");
-
-//       // Backend already clears the cart
-//       setCartItems([]);
-//     } catch (err) {
-//       setStatus("error");
-
-//       setErrors((prev) => ({
-//         ...prev,
-//         submit:
-//           err.response?.data?.message || err.message || "Error creating order",
-//       }));
-//     }
-//   };
-
-const handleSubmit = async (e) => {
-  e.preventDefault();
-
-  console.log("===== CREATE ORDER START =====");
-  console.log("Cart items:", cartItems);
-
-  if (cartItems.length === 0) {
-    console.log("Order stopped: Cart is empty");
-    return;
-  }
-
-  if (!validate()) {
-    console.log("Order stopped: Validation failed");
-    return;
-  }
-
-  setStatus("submitting");
-
-  console.log("Order status: submitting");
-  console.log("Orders endpoint:", ORDERS_ENDPOINT);
-
-  const token = localStorage.getItem("token");
-  console.log("Token exists:", !!token);
-
-  try {
-    console.log("Sending POST request to:", ORDERS_ENDPOINT);
-
-    const response = await axios.post(
-      ORDERS_ENDPOINT,
-      {},
-      {
-        headers: {
-          "Content-Type": "application/json",
-          ...authHeaders(),
+    try {
+      const response = await axios.post(
+        ORDERS_ENDPOINT,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json",
+            ...authHeaders(),
+          },
         },
-      }
-    );
+      );
 
-    console.log("Order request successful");
-    console.log("Status:", response.status);
-    console.log("Response data:", response.data);
+      const body = response.data;
 
-    const body = response.data;
+      setOrderResult({
+        orderId: body.orderId,
+        totalAmount: body.totalAmount,
+      });
 
-    console.log("Order ID:", body.orderId);
-    console.log("Total amount:", body.totalAmount);
+      await fetchCart();
 
-    setOrderResult({
-      orderId: body.orderId,
-      totalAmount: body.totalAmount,
-    });
+      setStatus("success");
+    } catch (err) {
+      setStatus("error");
 
-    setStatus("success");
-
-    console.log("Order status: success");
-    console.log("Clearing cart...");
-
-    setCartItems([]);
-
-    console.log("===== CREATE ORDER END =====");
-
-  } catch (err) {
-    console.error("===== CREATE ORDER FAILED =====");
-    console.error("Error:", err);
-    console.error("Error message:", err.message);
-    console.error("Response status:", err.response?.status);
-    console.error("Response data:", err.response?.data);
-    console.error("Request URL:", err.config?.url);
-
-    setStatus("error");
-
-    setErrors((prev) => ({
-      ...prev,
-      submit:
-        err.response?.data?.message ||
-        err.message ||
-        "Error creating order",
-    }));
-  }
-};
+      setErrors((prev) => ({
+        ...prev,
+        submit:
+          err.response?.data?.message || err.message || "Error creating order",
+      }));
+    }
+  };
 
   if (status === "success" && orderResult) {
     return (

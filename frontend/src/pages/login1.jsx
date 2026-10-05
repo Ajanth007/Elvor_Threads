@@ -9,79 +9,68 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-//   const Handlelogin = async (e) => {
-//     e.preventDefault();
+  //   const Handlelogin = async (e) => {
+  //     e.preventDefault();
 
-//     try {
-//       const response = await axios.post("http://localhost:8000/auth/login", {
-//         username: username,
-//         password: password,
-//       });
+  //     try {
+  //       const response = await axios.post("http://localhost:8000/auth/login", {
+  //         username: username,
+  //         password: password,
+  //       });
 
-//       dispatch({
-//   type: "LOGIN",
-//   payload: {
-//     token: response.data.token,
-//     username: response.data.user.username,
-//     id: response.data.user.id,
-//   },
-// });
+  //       dispatch({
+  //   type: "LOGIN",
+  //   payload: {
+  //     token: response.data.token,
+  //     username: response.data.user.username,
+  //     id: response.data.user.id,
+  //   },
+  // });
 
-// localStorage.setItem("token", response.data.token);
-// localStorage.setItem("userId", response.data.userId);
+  // localStorage.setItem("token", response.data.token);
+  // localStorage.setItem("userId", response.data.userId);
 
-//       setUsername("");
-//       setPassword("");
-//       alert("User logged in successfully");
+  //       setUsername("");
+  //       setPassword("");
+  //       alert("User logged in successfully");
 
-//       navigate("/profile");
-//     } catch (error) {
-//       console.error(error);
-//       alert("Login failed");
-//     }
-//   };
+  //       navigate("/profile");
+  //     } catch (error) {
+  //       console.error(error);
+  //       alert("Login failed");
+  //     }
+  //   };
 
+  const Handlelogin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:8000/auth/login", {
+        username,
+        password,
+      });
+      const { token, user } = response.data;
 
-const Handlelogin = async (e) => {
-  e.preventDefault();
+      dispatch({
+        type: "LOGIN",
+        payload: { token, username: user.username, id: user.id },
+      });
 
-  try {
-    const response = await axios.post(
-      "http://localhost:8000/auth/login",
-      {
-        username: username,
-        password: password,
-      }
-    );
+      localStorage.setItem("token", token);
+      localStorage.setItem("userId", user.id);
 
-    dispatch({
-      type: "LOGIN",
-      payload: {
-        token: response.data.token,
-        username: response.data.user.username,
-        id: response.data.user.id,
-      },
-    });
-
-    localStorage.setItem("token", response.data.token);
-    localStorage.setItem("userId", response.data.user.id);
-
-    setUsername("");
-    setPassword("");
-
-    alert("User logged in successfully");
-
-    navigate("/profile");
-  } catch (error) {
-    console.error(
-      "Login error:",
-      error.response?.data || error.message
-    );
-
-    alert("Login failed");
-  }
-};
-
+      setUsername("");
+      setPassword("");
+      
+      alert("User logged in successfully");
+      navigate("/profile");
+    } catch (error) {
+      console.error(
+        "Login error:",
+        error.response?.data?.message || error.message,
+      );
+      alert(error.response?.data?.message || "Login failed");
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#F7F2EB] flex items-center justify-center px-4">
@@ -149,10 +138,10 @@ const Handlelogin = async (e) => {
         {/* Register */}
         <p className="text-center text-sm text-gray-500 mt-6">
           Don't have an account?{" "}
-          <Link to = '/register'>
-          <button className="text-[#6F7D55] font-semibold hover:underline">
-            Sign Up
-          </button>
+          <Link to="/register">
+            <button className="text-[#6F7D55] font-semibold hover:underline">
+              Sign Up
+            </button>
           </Link>
         </p>
       </div>

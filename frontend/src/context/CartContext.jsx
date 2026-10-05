@@ -22,7 +22,7 @@ export const CartProvider = ({ children }) => {
           userId: userId,
           productId: product.id,
           quantity: quantity,
-          size:selectedSize
+          size: selectedSize,
         },
         {
           headers: {
@@ -44,7 +44,7 @@ export const CartProvider = ({ children }) => {
               ? {
                   ...item,
                   quantity: item.quantity + quantity,
-                  size : selectedSize
+                  size: selectedSize,
                 }
               : item,
           );
@@ -204,6 +204,7 @@ export const CartProvider = ({ children }) => {
         clearCart,
         cartCount,
         cartTotal,
+        fetchCart,
       }}
     >
       {children}
