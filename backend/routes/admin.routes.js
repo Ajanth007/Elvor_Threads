@@ -4,12 +4,12 @@ const router = express.Router();
 const { verifyAdmin } = require("../middleware/adminMiddleware");
 const { adminLogin } = require("../controllers/adminauthController");
 const { getDashboardStats } = require("../controllers/dashboardController");
-// const {
-//   getAllProductsAdmin,
-//   createProduct,
-//   updateProduct,
-//   deleteProduct,
-// } = require("./productAdminController");
+const {
+  getAllProductsAdmin,
+  createProduct,
+  updateProduct,
+  deleteProduct,
+} = require("../controllers/productAdminController");
 // const { getAllOrdersAdmin, updateOrderStatus } = require("./orderAdminController");
 // const { getAllUsers, deleteUser } = require("./userAdminController");
 
@@ -19,10 +19,10 @@ router.post("/admin/login", adminLogin);
 // // Everything below requires a valid admin JWT.
 router.get("/admin/dashboard/stats", verifyAdmin, getDashboardStats);
 
-// router.get("/admin/products", verifyAdmin, getAllProductsAdmin);
-// router.post("/admin/products", verifyAdmin, createProduct);
-// router.put("/admin/products/:id", verifyAdmin, updateProduct);
-// router.delete("/admin/products/:id", verifyAdmin, deleteProduct);
+router.get("/admin/products", verifyAdmin, getAllProductsAdmin);
+router.post("/admin/products", verifyAdmin, createProduct);
+router.put("/admin/products/:id", verifyAdmin, updateProduct);
+router.delete("/admin/products/:id", verifyAdmin, deleteProduct);
 
 // router.get("/admin/orders", verifyAdmin, getAllOrdersAdmin);
 // router.patch("/admin/orders/:id/status", verifyAdmin, updateOrderStatus);
