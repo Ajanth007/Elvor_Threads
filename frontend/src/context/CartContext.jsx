@@ -32,6 +32,7 @@ export const CartProvider = ({ children }) => {
       );
 
       console.log("Backend response:", response.data);
+      console.log(cartItems)
 
       setCartItems((currentItems) => {
         const existingItem = currentItems.find(

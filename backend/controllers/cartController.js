@@ -40,18 +40,19 @@ const addToCart = async (req, res) => {
   try {
     const userId = req.user.id;
 
-    const { productId, quantity } = req.body;
+    const { productId, quantity, size } = req.body;
 
-    if (!productId || !quantity) {
+    if (!productId || !quantity || !size) {
       return res.status(400).json({
-        message: "Product ID and quantity are required",
+        message: "Product ID, quantity and size are required",
       });
     }
 
-    // Check whether product exists
-    const [products] = await pool.query("SELECT * FROM products WHERE id = ?", [
-      productId,
-    ]);
+    // Check product
+    const [products] = await pool.query(
+      "SELECT * FROM products WHERE id = ?",
+      [productId]
+    );
 
     if (products.length === 0) {
       return res.status(404).json({
@@ -68,10 +69,11 @@ const addToCart = async (req, res) => {
       });
     }
 
-    // Check if product already exists in user's cart
+    // Check same product + same size
     const [existingCart] = await pool.query(
-      "SELECT * FROM cart WHERE user_id = ? AND product_id = ?",
-      [userId, productId],
+      `SELECT * FROM cart
+       WHERE user_id = ? AND product_id = ? AND size = ?`,
+      [userId, productId, size]
     );
 
     if (existingCart.length > 0) {
@@ -84,19 +86,24 @@ const addToCart = async (req, res) => {
       }
 
       await pool.query(
-        "UPDATE cart SET quantity = ? WHERE user_id = ? AND product_id = ?",
-        [newQuantity, userId, productId],
+        `UPDATE cart
+         SET quantity = ?
+         WHERE user_id = ? AND product_id = ? AND size = ?`,
+        [newQuantity, userId, productId, size]
       );
     } else {
       await pool.query(
-        "INSERT INTO cart (user_id, product_id, quantity) VALUES (?, ?, ?)",
-        [userId, productId, quantity],
+        `INSERT INTO cart
+         (user_id, product_id, quantity, size)
+         VALUES (?, ?, ?, ?)`,
+        [userId, productId, quantity, size]
       );
     }
 
     res.status(201).json({
       message: "Product added to cart",
     });
+
   } catch (error) {
     console.error("Add cart error:", error);
 

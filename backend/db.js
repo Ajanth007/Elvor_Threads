@@ -63,25 +63,44 @@ async function createTables() {
     `);
 
     // Cart
+    // await connection.query(`
+    //   CREATE TABLE IF NOT EXISTS cart (
+    //     id INT PRIMARY KEY AUTO_INCREMENT,
+    //     user_id INT NOT NULL,
+    //     product_id INT NOT NULL,
+    //     quantity INT NOT NULL DEFAULT 1,
+
+    //     FOREIGN KEY (user_id)
+    //       REFERENCES users(id)
+    //       ON DELETE CASCADE,
+
+    //     FOREIGN KEY (product_id)
+    //       REFERENCES products(id)
+    //       ON DELETE CASCADE,
+
+    //     UNIQUE (user_id, product_id)
+    //   )
+    // `);
+
     await connection.query(`
-      CREATE TABLE IF NOT EXISTS cart (
-        id INT PRIMARY KEY AUTO_INCREMENT,
-        user_id INT NOT NULL,
-        product_id INT NOT NULL,
-        quantity INT NOT NULL DEFAULT 1,
+  CREATE TABLE IF NOT EXISTS cart (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    product_id INT NOT NULL,
+    quantity INT NOT NULL DEFAULT 1,
+    size VARCHAR(20) NOT NULL,
 
-        FOREIGN KEY (user_id)
-          REFERENCES users(id)
-          ON DELETE CASCADE,
+    FOREIGN KEY (user_id)
+      REFERENCES users(id)
+      ON DELETE CASCADE,
 
-        FOREIGN KEY (product_id)
-          REFERENCES products(id)
-          ON DELETE CASCADE,
+    FOREIGN KEY (product_id)
+      REFERENCES products(id)
+      ON DELETE CASCADE,
 
-        UNIQUE (user_id, product_id)
-      )
-    `);
-
+    UNIQUE (user_id, product_id, size)
+  )
+`); 
     // Orders
     await connection.query(`
       CREATE TABLE IF NOT EXISTS orders (

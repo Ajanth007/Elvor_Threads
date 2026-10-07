@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useCart } from "../context/CartContext";
-import AddtoCartButton from "../components/addToCart_button";
+import AddtoCartButton from "../components/addToCart_button.jsx";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -143,10 +143,7 @@ const ProductDetails = () => {
             /> */}
             <AddtoCartButton
   onAdd={() => {
-    console.log("ADD TO CART FUNCTION CALLED");
-    console.log("Product:", product);
-    console.log("Quantity:", quantity);
-    console.log("Size:", selectedSize);
+ 
 
     addToCart(product, quantity, selectedSize);
   }}
