@@ -10,7 +10,7 @@ const {
   updateProduct,
   deleteProduct,
 } = require("../controllers/productAdminController");
-// const { getAllOrdersAdmin, updateOrderStatus } = require("./orderAdminController");
+const { getAllOrdersAdmin, updateOrderStatus } = require("../controllers/orderAdminController");
 // const { getAllUsers, deleteUser } = require("./userAdminController");
 
 // Public — no verifyAdmin here, this IS how an admin gets a token.
@@ -24,8 +24,8 @@ router.post("/admin/products", verifyAdmin, createProduct);
 router.put("/admin/products/:id", verifyAdmin, updateProduct);
 router.delete("/admin/products/:id", verifyAdmin, deleteProduct);
 
-// router.get("/admin/orders", verifyAdmin, getAllOrdersAdmin);
-// router.patch("/admin/orders/:id/status", verifyAdmin, updateOrderStatus);
+router.get("/admin/orders", verifyAdmin, getAllOrdersAdmin);
+router.patch("/admin/orders/:id/status", verifyAdmin, updateOrderStatus);
 
 // router.get("/admin/users", verifyAdmin, getAllUsers);
 // router.delete("/admin/users/:id", verifyAdmin, deleteUser);

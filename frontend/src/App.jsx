@@ -25,6 +25,7 @@ import AdminLogin from "./pages/adminlogin.jsx";
 import AdminDashboard from "./pages/adminDashboard.jsx";
 import AdminLayout from "./layout/adminLayout.jsx";
 import AdminProducts from "./pages/adminProducts.jsx";
+import AdminOrders from "./pages/adminOrders.jsx";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -83,7 +84,7 @@ function App() {
 
         {/* Later you can add */}
         <Route path="/admin/products" element={<AdminProducts />} />
-        {/* <Route path="/admin/orders" element={<AdminOrders />} /> */}
+        <Route path="/admin/orders" element={<AdminOrders />} />
         {/* <Route path="/admin/users" element={<AdminUsers />} /> */}
 
       </Route>
