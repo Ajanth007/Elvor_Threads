@@ -3,7 +3,7 @@ const router = express.Router();
 
 const { verifyAdmin } = require("../middleware/adminMiddleware");
 const { adminLogin } = require("../controllers/adminauthController");
-// const { getDashboardStats } = require("./dashboardController");
+const { getDashboardStats } = require("../controllers/dashboardController");
 // const {
 //   getAllProductsAdmin,
 //   createProduct,
@@ -17,7 +17,7 @@ const { adminLogin } = require("../controllers/adminauthController");
 router.post("/admin/login", adminLogin);
 
 // // Everything below requires a valid admin JWT.
-// router.get("/admin/dashboard/stats", verifyAdmin, getDashboardStats);
+router.get("/admin/dashboard/stats", verifyAdmin, getDashboardStats);
 
 // router.get("/admin/products", verifyAdmin, getAllProductsAdmin);
 // router.post("/admin/products", verifyAdmin, createProduct);
