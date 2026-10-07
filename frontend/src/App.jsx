@@ -15,6 +15,12 @@ import Profile from "./pages/Profile.jsx";
 import Preloader from "./components/preloader.jsx";
 import { AuthContext } from "./context/AuthContext";
 import MainLayout from "./layout/mainLayout.jsx";
+
+
+//admin
+import AdminLogin from "./pages/adminlogin.jsx";
+
+
 function App() {
   const { user } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
@@ -43,6 +49,7 @@ function App() {
         <Route path="/register" element={<Register />} />{" "}
         <Route path="/search" element={<Search />} />{" "}
         <Route path="/profile" element={user ? <Profile /> : <Login />} />{" "}
+        <Route path="/admin/login" element={<AdminLogin />} />
       </Route>{" "}
     </Routes>
   );

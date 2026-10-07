@@ -10,13 +10,13 @@ const mysql = require("mysql2/promise");
 
 const pool = mysql.createPool({
   host: "127.0.0.1",
-  port: '3307',
+  port: "3307",
   user: "root",
   password: "root",
   database: "elvor_threads",
   waitForConnections: true,
   connectionLimit: 10,
-  queueLimit: 0
+  queueLimit: 0,
 });
 
 async function testConnection() {
@@ -33,7 +33,6 @@ async function testConnection() {
 }
 
 testConnection();
-
 
 async function createTables() {
   const connection = await pool.getConnection();
@@ -58,29 +57,15 @@ async function createTables() {
         description TEXT,
         category VARCHAR(100),
         image VARCHAR(500),
-        stock INT NOT NULL DEFAULT 0
+        stock INT NOT NULL DEFAULT 0,
+        
+        tag VARCHAR(20),
+         original_price DECIMAL(10,2)
       )
     `);
 
-    // Cart
-    // await connection.query(`
-    //   CREATE TABLE IF NOT EXISTS cart (
-    //     id INT PRIMARY KEY AUTO_INCREMENT,
-    //     user_id INT NOT NULL,
-    //     product_id INT NOT NULL,
-    //     quantity INT NOT NULL DEFAULT 1,
-
-    //     FOREIGN KEY (user_id)
-    //       REFERENCES users(id)
-    //       ON DELETE CASCADE,
-
-    //     FOREIGN KEY (product_id)
-    //       REFERENCES products(id)
-    //       ON DELETE CASCADE,
-
-    //     UNIQUE (user_id, product_id)
-    //   )
-    // `);
+//     ALTER TABLE products ADD COLUMN tag VARCHAR(20);            -- "New" | "Sale" | NULL
+// ALTER TABLE products ADD COLUMN original_price DECIMAL(10,2);
 
     await connection.query(`
   CREATE TABLE IF NOT EXISTS cart (
@@ -100,7 +85,7 @@ async function createTables() {
 
     UNIQUE (user_id, product_id, size)
   )
-`); 
+`);
     // Orders
     await connection.query(`
       CREATE TABLE IF NOT EXISTS orders (
@@ -143,6 +128,15 @@ async function createTables() {
       )
     `);
 
+    //admins
+    await connection.query(`CREATE TABLE IF NOT EXISTS admins (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(100) NOT NULL UNIQUE,
+  password_hash VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);`);
+
+
     console.log("All tables are ready.");
   } catch (error) {
     console.error("Error creating tables:", error);
@@ -153,7 +147,7 @@ async function createTables() {
 
 module.exports = {
   pool,
-  createTables
+  createTables,
 };
 
 // module.exports = connection;
