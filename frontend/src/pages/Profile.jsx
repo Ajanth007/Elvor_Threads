@@ -30,8 +30,7 @@ import { apiURL } from "../config/env";
  * doesn't fan out requests for the whole history.
  */
 
-// const API_BASE_URL = "http://localhost:8000"; // ASSUMPTION: replace with your real API base / axios instance
-const api = apiURL.Url
+const api = apiURL.Url    // ASSUMPTION: replace with your real API base / axios instance
 const RECENT_ORDERS_LIMIT = 3;
 
 function authHeaders(token) {

@@ -4,7 +4,7 @@ import { useCart } from "../context/CartContext";
 import { apiURL } from "../config/env";
 
 const Cart = () => {
-  const { cartItems, removeFromCart, updateQuantity, cartTotal } = useCart();
+  const { cartItems, removeFromCart, updateQuantity, cartTotal,  } = useCart();
 
   const api = apiURL.Url;
 

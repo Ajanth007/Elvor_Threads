@@ -4,11 +4,12 @@ import { Link } from "react-router-dom";
 import search from "../assets/search.svg";
 import cart from "../assets/shopping-cart.svg";
 import userIcon from "../assets/user.svg";
+import { useCart } from "../context/CartContext";
 
 import { AuthContext } from "../context/AuthContext";
 
 const Navbar = () => {
-  const [cartCount, setCartCount] = useState(0);
+  const {cartCount} =useCart();
 
   // Get login state from AuthContext
   const { user } = useContext(AuthContext);

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Truck, ShoppingBag } from "lucide-react";
 import axios from "axios";
 import { useCart } from "../context/CartContext";
+import { apiURL } from "../config/env";
 
 /**
  * Checkout page wired to the provided Express/MySQL order endpoints:
@@ -35,9 +36,10 @@ import { useCart } from "../context/CartContext";
  *    Adjust CART_ENDPOINT / the mapping below if your actual route or shape differs.
  */
 
-const API_BASE_URL = "http://localhost:8000"; // BACKEND: point at your real API origin (or use an env var)
-const CART_ENDPOINT = `${API_BASE_URL}/cart`;
-const ORDERS_ENDPOINT = `${API_BASE_URL}/order`;
+// const API_BASE_URL = "http://localhost:8000"; // BACKEND: point at your real API origin (or use an env var)
+const api = apiURL.Url
+const CART_ENDPOINT = `${api}/cart`;
+const ORDERS_ENDPOINT = `${api}/order`;
 
 const SHIPPING_FLAT_RATE = 8; // BACKEND: estimate only — server total doesn't include this yet
 const TAX_RATE = 0.0825; // BACKEND: estimate only — server total doesn't include this yet
@@ -49,10 +51,13 @@ function authHeaders() {
 }
 
 export default function CheckoutPage() {
+  
   const [cartItems, setCartItems] = useState([]);
   const [cartStatus, setCartStatus] = useState("loading"); // loading | ready | error
   const [cartError, setCartError] = useState("");
   const { fetchCart } = useCart();
+
+
 
   const [shipping, setShipping] = useState({
     fullName: "",
@@ -203,6 +208,7 @@ export default function CheckoutPage() {
     );
   }
 
+  console.log(cartItems)
   return (
     <div
       className="min-h-screen px-4 py-10 sm:px-8"
@@ -345,7 +351,7 @@ export default function CheckoutPage() {
                 <li key={item.id} className="flex items-center gap-3">
                   {item.image ? (
                     <img
-                      src={item.image}
+                      src={`${api}${item.image}`}
                       alt={item.name}
                       className="h-14 w-12 shrink-0 rounded-md object-cover"
                     />
