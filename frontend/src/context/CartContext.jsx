@@ -1,7 +1,9 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
+import { apiURL } from "../config/env";
 
 const CartContext = createContext();
+const api = apiURL.Url;
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
@@ -17,7 +19,7 @@ export const CartProvider = ({ children }) => {
       }
 
       const response = await axios.post(
-        "http://localhost:8000/cart",
+        `${api}/cart`,
         {
           userId: userId,
           productId: product.id,
@@ -31,8 +33,7 @@ export const CartProvider = ({ children }) => {
         },
       );
 
-      console.log("Backend response:", response.data);
-      console.log(cartItems)
+      console.log(cartItems);
 
       setCartItems((currentItems) => {
         const existingItem = currentItems.find(
@@ -72,14 +73,6 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  // const removeFromCart = (id, size) => {
-  //   setCartItems((currentItems) =>
-  //     currentItems.filter(
-  //       (item) => !(item.id === id && item.size === size)
-  //     )
-  //   );
-  // };
-
   const removeFromCart = async (id, size) => {
     try {
       const token = localStorage.getItem("token");
@@ -89,7 +82,7 @@ export const CartProvider = ({ children }) => {
         return;
       }
 
-      const response = await axios.delete(`http://localhost:8000/cart/${id}`, {
+      const response = await axios.delete(`${api}/cart/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -120,7 +113,7 @@ export const CartProvider = ({ children }) => {
       }
 
       await axios.put(
-        `http://localhost:8000/cart/${id}`,
+        `${api}/cart/${id}`,
         {
           quantity: newQuantity,
         },
@@ -169,7 +162,7 @@ export const CartProvider = ({ children }) => {
         return;
       }
 
-      const response = await axios.get("http://localhost:8000/cart", {
+      const response = await axios.get(`${api}/cart`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

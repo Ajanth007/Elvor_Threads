@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { IndianRupee, ShoppingBag, Users, Shirt } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts"; // npm i recharts
+import { apiURL } from "../config/env";
 
-const api = "http://localhost:8000"; // ASSUMPTION: match your real API base
+const api =apiURL.Url // ASSUMPTION: match your real API base
 
 function authHeaders() {
   const token = localStorage.getItem("adminToken");

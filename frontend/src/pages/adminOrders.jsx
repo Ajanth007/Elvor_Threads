@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
+import { apiURL } from "../config/env";
 
-const api = "http://localhost:8000"; // ASSUMPTION: match your real API base
+const api = apiURL.Url; // ASSUMPTION: match your real API base
 const STATUSES = ["pending", "shipped", "delivered", "cancelled"];
 
 function authHeaders() {

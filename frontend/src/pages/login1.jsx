@@ -2,49 +2,19 @@ import { useContext, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import { apiURL } from "../config/env";
 
 const Login = () => {
   const { dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
-  //   const Handlelogin = async (e) => {
-  //     e.preventDefault();
-
-  //     try {
-  //       const response = await axios.post("http://localhost:8000/auth/login", {
-  //         username: username,
-  //         password: password,
-  //       });
-
-  //       dispatch({
-  //   type: "LOGIN",
-  //   payload: {
-  //     token: response.data.token,
-  //     username: response.data.user.username,
-  //     id: response.data.user.id,
-  //   },
-  // });
-
-  // localStorage.setItem("token", response.data.token);
-  // localStorage.setItem("userId", response.data.userId);
-
-  //       setUsername("");
-  //       setPassword("");
-  //       alert("User logged in successfully");
-
-  //       navigate("/profile");
-  //     } catch (error) {
-  //       console.error(error);
-  //       alert("Login failed");
-  //     }
-  //   };
+  const api = apiURL.Url; 
 
   const Handlelogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8000/auth/login", {
+      const response = await axios.post(`${api}/auth/login`, {
         username,
         password,
       });
@@ -60,7 +30,7 @@ const Login = () => {
 
       setUsername("");
       setPassword("");
-      
+
       alert("User logged in successfully");
       navigate("/profile");
     } catch (error) {

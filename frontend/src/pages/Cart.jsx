@@ -1,10 +1,12 @@
 import React from "react";
 import { useCart } from "../context/CartContext";
 
+import { apiURL } from "../config/env";
+
 const Cart = () => {
   const { cartItems, removeFromCart, updateQuantity, cartTotal } = useCart();
 
-  const api = "http://localhost:8000";
+  const api = apiURL.Url;
 
   if (cartItems.length === 0) {
     return (

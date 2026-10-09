@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ShoppingBag, Check, PackageSearch } from "lucide-react";
 import { useCart } from "../context/CartContext";
+import { apiURL } from "../config/env";
 
-const api = "http://localhost:8000";
+const api = apiURL.Url
 
 /**
  * Shop grid — premium/editorial styling on top of your existing /shop fetch.
@@ -138,116 +139,6 @@ const Shop = () => {
             const justAdded = addedId === item.id;
 
             return (
-              // <Link
-              //   to={`/product/${item.id}`}
-              //   key={item.id}
-              //   className="group relative block min-w-0 overflow-hidden rounded-xl transition duration-300 hover:-translate-y-1 hover:shadow-xl"
-              //   style={{ backgroundColor: "#EAE2D6" }}
-              // >
-              //   {/* Badge */}
-              //   {item.tag && (
-              //     <span
-              //       className="absolute left-4 top-4 z-10 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wide"
-              //       style={{
-              //         backgroundColor:
-              //           item.tag.toLowerCase() === "sale"
-              //             ? "#B3432C"
-              //             : "#2F3A25",
-              //         color: "#F7F2EB",
-              //       }}
-              //     >
-              //       {item.tag}
-              //     </span>
-              //   )}
-
-              //   {/* Image + hover overlay */}
-              //   <div className="relative w-full overflow-hidden">
-              //     <img
-              //       src={`${api}${item.image}`}
-              //       alt={item.name}
-              //       className="block h-80 w-full object-cover transition duration-700 group-hover:scale-105"
-              //     />
-
-              //     {/* Gradient + quick add-to-cart, revealed on hover */}
-              //     <div className="pointer-events-none absolute inset-x-0 bottom-0 flex translate-y-2 items-end justify-center bg-gradient-to-t from-black/50 to-transparent p-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-              //       <button
-              //         onClick={(e) => handleAddToCart(e, item)}
-              //         className="pointer-events-auto flex w-full items-center justify-center gap-2 rounded-lg py-2.5 text-sm font-semibold transition-colors"
-              //         style={{
-              //           backgroundColor: justAdded ? "#8B9A6E" : "#F7F2EB",
-              //           color: justAdded ? "#F7F2EB" : "#2F3A25",
-              //         }}
-              //       >
-              //         {justAdded ? (
-              //           <>
-              //             <Check className="h-4 w-4" strokeWidth={2.5} /> Added
-              //           </>
-              //         ) : (
-              //           <>
-              //             <ShoppingBag className="h-4 w-4" /> Add to Cart
-              //           </>
-              //         )}
-              //       </button>
-              //     </div>
-              //   </div>
-
-              //   {/* Details */}
-              //   <div className="p-5">
-              //     <h3
-              //       className="text-xl font-semibold capitalize tracking-tight transition-colors"
-              //       style={{ color: "#2F3A25" }}
-              //     >
-              //       {item.name}
-              //     </h3>
-
-              //     {/* Color swatches */}
-              //     {Array.isArray(item.colors) && item.colors.length > 0 && (
-              //       <div className="mt-2 flex items-center gap-1.5">
-              //         {item.colors.map((color, i) => (
-              //           <span
-              //             key={i}
-              //             className="h-3.5 w-3.5 rounded-full ring-1 ring-black/10"
-              //             style={{ backgroundColor: color }}
-              //           />
-              //         ))}
-              //       </div>
-              //     )}
-
-              //     <div className="mt-4 flex items-center justify-between gap-3">
-              //       <div className="flex items-baseline gap-2">
-              //         <p
-              //           className="text-lg font-semibold"
-              //           style={{ color: "#2F3A25" }}
-              //         >
-              //           ₹{item.price}
-              //         </p>
-              //         {hasDiscount && (
-              //           <p
-              //             className="text-sm line-through"
-              //             style={{ color: "#8A8275" }}
-              //           >
-              //             ₹{item.originalPrice}
-              //           </p>
-              //         )}
-              //       </div>
-              //       <div className="flex gap-0.5">
-              //         {["S", "M", "L", "XL"].map((size) => (
-              //           <button
-              //             key={size}
-              //             onClick={() => setSelectedSize(size)}
-              //             className={`h-8 w-6 rounded-lg  text-sm font-medium transition ${
-              //               selectedSize === size
-              //                 ? "border-[#2F3A25] bg-[#2F3A25] text-white"
-              //                 : "border-gray-300 bg-white text-[#2F3A25] hover:border-[#2F3A25]"
-              //             }`}
-              //           >
-              //             {size}
-              //           </button>
-              //         ))}
-              //       </div>
-              //     </div>
-              //   </div>
-              // </Link>
               <Link
                 to={`/product/${item.id}`}
                 key={item.id}

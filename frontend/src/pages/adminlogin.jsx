@@ -1,8 +1,9 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AdminAuthContext } from "../context/AdminAuthContext.jsx";
+import { apiURL } from "../config/env.js";
 
-const api = "http://localhost:8000"; // ASSUMPTION: match your real API base
+const api = apiURL.Url; // ASSUMPTION: match your real API base
 
 export default function AdminLogin() {
   const navigate = useNavigate();

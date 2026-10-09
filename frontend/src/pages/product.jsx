@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import AddtoCartButton from "../components/addToCart_button.jsx";
+import { apiURL } from "../config/env.js";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -11,7 +12,7 @@ const ProductDetails = () => {
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState("M");
 
-  const api = "http://localhost:8000";
+const api = apiURL.Url; 
 
   useEffect(() => {
     fetch(`${api}/shop/${id}`)

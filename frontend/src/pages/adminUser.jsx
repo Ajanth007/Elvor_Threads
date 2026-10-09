@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Trash2 } from "lucide-react";
+import { apiURL } from "../config/env";
 
-const api = "http://localhost:8000"; // ASSUMPTION: match your real API base
+const api = apiURL.Url;  // ASSUMPTION: match your real API base
 
 function authHeaders() {
   const token = localStorage.getItem("adminToken");

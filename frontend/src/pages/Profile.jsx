@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Package, ShoppingCart, ChevronRight, LogOut, Lock, UserRound } from "lucide-react";
 // ASSUMPTION: adjust this import path to wherever AuthContext.jsx actually lives.
 import { AuthContext } from "../context/AuthContext";
+import { apiURL } from "../config/env";
 
 /**
  * ELVOR THREADS — Profile page.
@@ -29,7 +30,8 @@ import { AuthContext } from "../context/AuthContext";
  * doesn't fan out requests for the whole history.
  */
 
-const API_BASE_URL = "http://localhost:8000"; // ASSUMPTION: replace with your real API base / axios instance
+// const API_BASE_URL = "http://localhost:8000"; // ASSUMPTION: replace with your real API base / axios instance
+const api = apiURL.Url
 const RECENT_ORDERS_LIMIT = 3;
 
 function authHeaders(token) {
@@ -76,9 +78,9 @@ export default function ProfilePage() {
       try {
         // Profile, orders, and cart can all load in parallel — none depend on each other.
         const [profileRes, ordersRes, cartRes] = await Promise.all([
-          fetch(`${API_BASE_URL}/users/profile`, { headers: authHeaders(user.token) }),
-          fetch(`${API_BASE_URL}/order`, { headers: authHeaders(user.token) }),
-          fetch(`${API_BASE_URL}/cart`, { headers: authHeaders(user.token) }),
+          fetch(`${api}/users/profile`, { headers: authHeaders(user.token) }),
+          fetch(`${api}/order`, { headers: authHeaders(user.token) }),
+          fetch(`${api}/cart`, { headers: authHeaders(user.token) }),
         ]);
 
         if (!profileRes.ok) throw new Error("Could not load your profile");
@@ -105,7 +107,7 @@ export default function ProfilePage() {
 
         const detailResults = await Promise.all(
           latest.map((order) =>
-            fetch(`${API_BASE_URL}/order/${order.id}`, { headers: authHeaders(user.token) })
+            fetch(`${api}/order/${order.id}`, { headers: authHeaders(user.token) })
               .then((res) => (res.ok ? res.json() : null))
               .catch(() => null)
           )
