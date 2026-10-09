@@ -26,7 +26,7 @@ const getCart = async (req, res) => {
 
     res.status(200).json(cart);
 
-    res.status(200).json(results);
+    res.status(200).json();
   } catch (error) {
     console.error("Get cart error:", error);
     res.status(500).json({

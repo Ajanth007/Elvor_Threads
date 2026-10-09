@@ -9,7 +9,8 @@ const productRoutes = require("./routes/productRoutes");
 const userRoutes = require("./routes/userRoutes");
 const cartRoutes = require("./routes/cartRoute");
 const orderRoute = require("./routes/orderRoute");
-const adminRoutes = require("./routes/admin.routes")
+const contactRoute = require("./routes/contactRoute.js")
+const adminRoutes = require("./routes/admin.routes");
 
 const app = express();
 
@@ -32,7 +33,9 @@ app.use("/shop", productRoutes);
 app.use("/users", userRoutes);
 app.use("/cart",cartRoutes);
 app.use("/order",orderRoute)
+app.use("/contact",contactRoute)
  app.use("/", adminRoutes);
+
 
 // =========================
 // Basic Routes

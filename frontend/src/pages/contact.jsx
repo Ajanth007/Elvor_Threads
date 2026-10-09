@@ -1,5 +1,8 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { apiURL } from "../config/env";
 
+const api =apiURL.Url
 const contact = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -12,11 +15,40 @@ const contact = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(formData);
-    // wire up your submit logic here
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log(formData);
+  //   // wire up your submit logic here
+  // };
+
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+  setStatus("");
+
+  try {
+    const response = await axios.post(
+      `${api}/contact`,
+      formData
+    );
+
+    setStatus(response.data.message);
+
+    setFormData({
+      name: "",
+      email: "",
+      subject: "",
+      message: "",
+    });
+  } catch (error) {
+    setStatus(
+      error.response?.data?.message ||
+        "Failed to send message. Please try again."
+    );
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="bg-[#EAE2D6] w-full px-8 md:px-20 py-24">
